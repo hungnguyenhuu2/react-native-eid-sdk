@@ -1,0 +1,74 @@
+buildscript {
+    if (project == rootProject) {
+        repositories {
+            google()
+            mavenCentral()
+            jcenter()
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:3.5.3'
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+    compileSdkVersion safeExtGet('EidSdk_compileSdkVersion', 29)
+    defaultConfig {
+        minSdkVersion safeExtGet('EidSdk_minSdkVersion', 19)
+        targetSdkVersion safeExtGet('EidSdk_targetSdkVersion', 29)
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$rootDir/../node_modules/react-native/android")
+    }
+    google()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile(name:'eid_30_06', ext:'aar')
+    implementation 'com.rmtheis:tess-two:9.1.0'
+    implementation "io.reactivex.rxjava3:rxjava:3.0.0"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'net.sf.scuba:scuba-sc-android:0.0.20'
+    implementation 'com.madgag.spongycastle:prov:1.58.0.0'
+    implementation 'com.gemalto.jp2:jp2-android:1.0'
+    implementation 'com.github.mhshams:jnbis:1.1.0'
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.65'
+    implementation 'org.bouncycastle:bcpg-jdk15on:1.65'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.65'
+    implementation 'commons-io:commons-io:2.6'
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-nfc-manager')
+}
+

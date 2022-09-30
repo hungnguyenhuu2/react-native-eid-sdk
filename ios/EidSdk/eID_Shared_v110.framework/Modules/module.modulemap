@@ -1,0 +1,6 @@
+framework module eID_Shared_v110 {
+  umbrella header "eID_Shared_v110.h"
+
+  export *
+  module * { export * }
+}

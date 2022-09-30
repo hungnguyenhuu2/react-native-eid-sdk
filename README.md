@@ -1,2 +1,6 @@
-# React Native Eid Sdk
+# react-native-eid-sdk
 
+eid sdk for react native
+## License
+
+MIT

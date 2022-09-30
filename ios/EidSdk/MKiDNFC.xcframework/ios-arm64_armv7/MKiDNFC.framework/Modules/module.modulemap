@@ -1,0 +1,11 @@
+framework module MKiDNFC {
+  umbrella header "MKiDNFC.h"
+
+  export *
+  module * { export * }
+}
+
+module MKiDNFC.Swift {
+    header "MKiDNFC-Swift.h"
+    requires objc
+}

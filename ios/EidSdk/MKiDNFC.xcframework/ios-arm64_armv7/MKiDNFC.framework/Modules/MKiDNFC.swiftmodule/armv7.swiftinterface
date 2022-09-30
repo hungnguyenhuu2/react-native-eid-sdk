@@ -1,0 +1,241 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
+// swift-module-flags: -target armv7-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name MKiDNFC
+import CommonCrypto
+import CoreNFC
+import CryptoTokenKit
+import Foundation
+@_exported import MKiDNFC
+import OpenSSL
+import Swift
+import UIKit
+import _Concurrency
+import eID_Shared_v110
+public struct QKMRZResult {
+  public let documentType: Swift.String
+  public let countryCode: Swift.String
+  public let surnames: Swift.String
+  public let givenNames: Swift.String
+  public let documentNumber: Swift.String
+  public let nationality: Swift.String
+  public let birthDate: Foundation.Date?
+  public let sex: Swift.String?
+  public let expiryDate: Foundation.Date?
+  public let personalNumber: Swift.String
+  public let personalNumber2: Swift.String?
+  public let isDocumentNumberValid: Swift.Bool
+  public let isBirthDateValid: Swift.Bool
+  public let isExpiryDateValid: Swift.Bool
+  public let isPersonalNumberValid: Swift.Bool?
+  public let allCheckDigitsValid: Swift.Bool
+}
+@objc public enum NFCViewDisplayMessage : Swift.Int {
+  case None = 0
+  case ErrorCreateTemplate = 1
+  case requestPresentPassport = 2
+  case successfulRead = 5
+  case SODSuccess = 6
+  case Cannotconnecttoserver = 7
+  case ErrorVerification = 8
+  case ErrorURL = 9
+  case successFace = 10
+  case ErrorGetMRZ = 11
+  case Close = 12
+  case NotSuccessSOD = 93
+  case TimeOut = 28
+  case NotConnect = 56
+  case ErrorData = 300
+  case NotActivate = 600
+  case DataDecodingError = 302
+  case licenseExpires = -1
+  case ErrorMoC = 1002
+  case ErrorSam = 1003
+  case ErrorVerifySOD = 1007
+  case ErrorData1 = 1005
+  case ErrorTemplate = 1006
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum NFCPassportReaderError : Swift.Int {
+  case ResponseError = 0
+  case InvalidResponse = 1
+  case UnexpectedError = 2
+  case NFCNotSupported = 3
+  case NoConnectedTag = 4
+  case D087Malformed = 5
+  case InvalidResponseChecksum = 6
+  case MissingMandatoryFields = 7
+  case CannotDecodeASN1Length = 8
+  case InvalidASN1Value = 9
+  case UnableToProtectAPDU = 10
+  case UnableToUnprotectAPDU = 11
+  case UnsupportedDataGroup = 12
+  case DataGroupNotRead = 13
+  case UnknownTag = 14
+  case UnknownImageFormat = 15
+  case NotImplemented = 16
+  case TagNotValid = 17
+  case ConnectionError = 18
+  case UserCanceled = 19
+  case InvalidMRZKey = 20
+  case MoreThanOneTagFound = 21
+  case InvalidHashAlgorithmSpecified = 22
+  case InvalidDataPassed = 23
+  case NotYetSupported = 24
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc public class PassportUtils : ObjectiveC.NSObject {
+  @objc public func getMRZKey(passportNumber: Swift.String, dateOfBirth: Swift.String, dateOfExpiry: Swift.String) -> Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class MRZObj : ObjectiveC.NSObject {
+  @objc public var idNumber: Swift.String
+  @objc public var dateOfBirth: Swift.String
+  @objc public var dateOfExpiry: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct ErrorMessageCard {
+  public let index: Swift.Int
+  public let value: Swift.String
+}
+@available(iOS 13, *)
+@objc public protocol UpdateReaderSessionMessageDelegte {
+  @objc func showMessage(alertMessage: MKiDNFC.NFCViewDisplayMessage)
+  @objc func errorMessage(_ value: MKiDNFC.NFCViewDisplayMessage)
+  @objc func errorCard(_ value: MKiDNFC.NFCPassportReaderError)
+  @objc func getInfoCard(_ value: MKiDNFC.CardInfo)
+  @objc func getSODresult(_ value: MKiDNFC.NFCViewDisplayMessage)
+}
+@_inheritsConvenienceInitializers @available(iOS 13, *)
+@objc public class PassportReader : ObjectiveC.NSObject {
+  @objc weak public var delegate: MKiDNFC.UpdateReaderSessionMessageDelegte?
+  @objc public func readIdInfo(image: UIKit.UIImage)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@available(iOS 13, *)
+extension MKiDNFC.PassportReader : CoreNFC.NFCTagReaderSessionDelegate {
+  public func tagReaderSessionDidBecomeActive(_ session: CoreNFC.NFCTagReaderSession)
+  public func tagReaderSession(_ session: CoreNFC.NFCTagReaderSession, didInvalidateWithError error: Swift.Error)
+  public func tagReaderSession(_ session: CoreNFC.NFCTagReaderSession, didDetect tags: [CoreNFC.NFCTag])
+}
+@available(iOS 13, *)
+extension MKiDNFC.PassportReader {
+  @objc dynamic public func showReaderMessage(_ value: Swift.String)
+  @objc dynamic public func invalidate()
+  @objc dynamic public func errorReaderMessage(_ value: Swift.String)
+}
+@_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@objc public class NFCPassportModel : ObjectiveC.NSObject {
+  public var documentType: Swift.String {
+    get
+  }
+  public var documentSubType: Swift.String {
+    get
+  }
+  public var personalNumber: Swift.String {
+    get
+  }
+  public var documentNumber: Swift.String {
+    get
+  }
+  public var issuingAuthority: Swift.String {
+    get
+  }
+  public var documentExpiryDate: Swift.String {
+    get
+  }
+  public var dateOfBirth: Swift.String {
+    get
+  }
+  public var gender: Swift.String {
+    get
+  }
+  public var nationality: Swift.String {
+    get
+  }
+  public var lastName: Swift.String {
+    get
+  }
+  public var firstName: Swift.String {
+    get
+  }
+  public var passportMRZ: Swift.String {
+    get
+  }
+  public var placeOfBirth: Swift.String? {
+    get
+  }
+  public var residenceAddress: Swift.String? {
+    get
+  }
+  public var phoneNumber: Swift.String? {
+    get
+  }
+  public var passportImage: UIKit.UIImage? {
+    get
+  }
+  public var signatureImage: UIKit.UIImage? {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class MKIDNFCHelper : ObjectiveC.NSObject {
+  @objc public func getDeviceId() -> Swift.String
+  @objc public func getDeviceName() -> Swift.String
+  @objc public func checkAppActivated() -> Swift.Bool
+  @objc public func deleteActivatedData()
+  @objc public func doActivate(url: Swift.String, andCustomerId: Swift.String, andProviderId: Swift.String, andBranchId: Swift.String, andAppId: Swift.Int32, successHandler: @escaping () -> Swift.Void, andFailureHandler: @escaping (Swift.Error) -> (), errorlicenseExpires: @escaping (MKiDNFC.NFCViewDisplayMessage) -> ())
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class CardInfo : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var imageData: Foundation.Data?
+  @objc public var IDNumber: Swift.String
+  @objc public var FullName: Swift.String
+  @objc public var DOB: Swift.String
+  @objc public var Gender: Swift.String
+  @objc public var Nationality: Swift.String
+  @objc public var Ethic: Swift.String
+  @objc public var Religion: Swift.String
+  @objc public var Hometown: Swift.String
+  @objc public var Resident: Swift.String
+  @objc public var DDND: Swift.String
+  @objc public var ValidDate: Swift.String
+  @objc public var ExpiredDate: Swift.String
+  @objc public var Father: Swift.String
+  @objc public var Mother: Swift.String
+  @objc public var Spouse: Swift.String
+  @objc public var OldIDNumber: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@_inheritsConvenienceInitializers @available(iOS 13, *)
+@objc public class GetInfoCard : ObjectiveC.NSObject {
+  @objc public func getInfo(_ passport: MKiDNFC.NFCPassportModel?, completion: @escaping (MKiDNFC.CardInfo) -> (), checkSODresult: @escaping (MKiDNFC.NFCViewDisplayMessage) -> ())
+  @objc override dynamic public init()
+  @objc deinit
+}
+public class QKMRZParser {
+  public init(ocrCorrection: Swift.Bool = false)
+  public func parse(mrzLines: [Swift.String]) -> MKiDNFC.QKMRZResult?
+  public func parse(mrzString: Swift.String) -> MKiDNFC.QKMRZResult?
+  @objc deinit
+}
+extension MKiDNFC.NFCViewDisplayMessage : Swift.Equatable {}
+extension MKiDNFC.NFCViewDisplayMessage : Swift.Hashable {}
+extension MKiDNFC.NFCViewDisplayMessage : Swift.RawRepresentable {}
+extension MKiDNFC.NFCPassportReaderError : Swift.Equatable {}
+extension MKiDNFC.NFCPassportReaderError : Swift.Hashable {}
+extension MKiDNFC.NFCPassportReaderError : Swift.RawRepresentable {}
